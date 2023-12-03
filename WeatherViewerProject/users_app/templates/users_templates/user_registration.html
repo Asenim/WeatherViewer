@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+{% block link_css %}<link rel="stylesheet" href="{% static "css/registration.css" %}" />{% endblock %}
+
+{% block title %} Страница Регистрации {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="offset-md-4 col-md-4 offset-sm-3 col-sm-6">
+        <div class="form-container">
+            <h3 class="title">Регистрация</h3>
+            <span class="description">Добро пожаловать на страницу регистрации</span>
+            <span class="description">Заполните форму регистрации ниже:</span>
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" class="form-control" placeholder="Введите ваш Логин">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="Введите ваш Email">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" class="form-control" placeholder="Введите ваш Пароль">
+                </div>
+
+                <button type="submit" class="btn signup">Регистрация</button>
+                <a class="btn signin" href="/users/login">Войти</a>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
