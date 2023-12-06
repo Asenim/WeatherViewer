@@ -22,5 +22,5 @@ from WeatherViewerProject.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users_app.urls')),
-    path('', index)
+    path('', index, name='index')
 ]

@@ -20,16 +20,24 @@
             <form class="form-horizontal" method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label>Логин</label>
-                    <input type="text" class="form-control" placeholder="Введите ваш Логин">
+                    {{ form.username }}
+<!--                    <label>Логин</label>-->
+<!--                    <input name="username" type="text" class="form-control" placeholder="Введите ваш Логин">-->
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" placeholder="Введите ваш Email">
+                    {{ form.email}}
+<!--                    <label>Email</label>-->
+<!--                    <input name="email" type="email" class="form-control" placeholder="Введите ваш Email">-->
                 </div>
                 <div class="form-group">
-                    <label>Пароль</label>
-                    <input type="password" class="form-control" placeholder="Введите ваш Пароль">
+                    {{ form.password1 }}
+<!--                    <label>Пароль</label>-->
+<!--                    <input name="password1" type="password" class="form-control" placeholder="Введите Пароль">-->
+                </div>
+                <div class="form-group">
+                    {{ form.password2 }}
+<!--                    <label>Пароль</label>-->
+<!--                    <input name="password2" type="password" class="form-control" placeholder="Повторите Пароль">-->
                 </div>
 
                 <button type="submit" class="btn signup">Регистрация</button>
