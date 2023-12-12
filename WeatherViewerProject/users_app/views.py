@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 # from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from users_app.forms import UserLoginForm, UserRegistrationForm
 #from django.views.generic import CreateView
 #from rest_framework.reverse import reverse_lazy
@@ -40,32 +40,3 @@ def user_registration(request):
         'form': form
     }
     return render(request, 'users_templates/user_registration.html', context)
-
-# class UserRegistration(DataMixin, CreateView):
-#     form_class = UserRegistrationForm
-#     template_name = 'users_templates/user_registration.html'
-#     success_url = reverse_lazy('login')
-#
-#     def get(self, request):
-#         context = {
-#             'form': UserRegistrationForm()
-#         }
-#         return render(request, self.template_name, context)
-#
-#     def post(self, request):
-#         form = UserRegistrationForm(request.POST)
-#
-#         if form.is_valid():
-#             form.save()
-#             user_name = form.cleaned_data.get('username')
-#             user_email = form.cleaned_data.get('email')
-#             user_password = form.cleaned_data.get('password1')
-#             print(user_name, user_email, user_password)
-#
-#             return redirect('login')
-#
-#         context = {
-#             'form': form
-#         }
-#
-#         return render(request, self.template_name, context)

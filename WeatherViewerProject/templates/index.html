@@ -1,7 +1,57 @@
 {% extends 'base.html' %}
-{% block link_css %}{% endblock %}
+{% load static %}
+
+{% block link_css %}<link rel="stylesheet" href="{% static "css/index.css" %}">{% endblock %}
 {% block title %} Главная страница {% endblock %}
 
 {% block body %}
-    <h1>Главная страница</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                {% if request.user.is_authenticated %}
+                    <div class="btn btn-default">
+                        <a class="btn btn-dark disabled">
+                            {{ request.user.username }}
+                        </a>
+                    </div>
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-danger" href="/logout"> Выйти </a>
+                    </div>
+                {% else %}
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-primary" href="/users/login"> Войти </a>
+                    </div>
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-dark" href="/users/registration/"> Регистрация </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form method="post" class="row g-3 justify-content-center">
+            {% csrf_token %}
+            <div class="col-auto">
+                <label for="inputSearch" class="visually-hidden">Поиск</label>
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" id="inputSearch" placeholder="Поиск">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Найти</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Название карточки</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+    </div>
+
 {% endblock %}
