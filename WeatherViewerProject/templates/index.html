@@ -36,22 +36,32 @@
                 <label for="inputSearch" class="visually-hidden">Поиск</label>
             </div>
             <div class="col-auto">
-                <input type="text" class="form-control" id="inputSearch" placeholder="Поиск">
+                <input type="text" class="form-control" id="inputSearch" name="inputSearch" placeholder="Поиск">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary mb-3">Найти</button>
             </div>
         </form>
     </div>
-    <div class="container">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Название карточки</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-    </div>
+
+    {% if list_object %}
+        {% for object in list_object %}
+            <div class="container">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ object.name_city }} {{ object.country_code }} </h5>
+                        <p class="card-text"> Широта: {{ object.lat }} </p>
+                        <p class="card-text"> Долгота: {{ object.lon }} </p>
+                        <form method="post">
+                            <input type="hidden">
+                        </form>
+<!--                        <a href="#" class="btn btn-primary"> Добавить в отслеживаемые </a>-->
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p> Введите город для поиска </p>
+    {% endif %}
 
 {% endblock %}

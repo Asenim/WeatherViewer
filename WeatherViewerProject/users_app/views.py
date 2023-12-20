@@ -1,11 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-# from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from users_app.forms import UserLoginForm, UserRegistrationForm
-#from django.views.generic import CreateView
-#from rest_framework.reverse import reverse_lazy
 
 
 # Create your views here.

@@ -19,6 +19,7 @@ POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 POSTGRES_USER = os.environ.get('POSTGRES_USER')
 POSTGRES_DB = os.environ.get('POSTGRES_DB')
 HOST = os.environ.get('HOST')
+API_KEY_OW = os.environ.get('API_KEY_OW')
 #----------------------------#
 
 
