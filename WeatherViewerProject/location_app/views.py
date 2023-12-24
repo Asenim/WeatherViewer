@@ -4,24 +4,20 @@ from location_app.weather_viewer_API.weather_viewer_controller import WeatherVie
 # Create your views here.
 
 
-def weather_viewer_find(request):
+def view_user_locations(request):
     """
-    Ищем данные о городе и отображаем их на странице.
+    Показывает погоду локаций добавленных на аккаунт.
     :return:
     """
-    # data = request.POST
-    # api_weather = WeatherViewerController()
-    # object_data = api_weather.search_location_by_name(data['inputSearch'])
-    # context = {
-    #     'name_city': object_data.name_city,
-    #     'country_code': object_data.country_code,
-    #     'lat': object_data.lat,
-    #     'lon': object_data.lon
-    # }
-    # # context = {'inp': 'hi!'}
-    # # print(data['inputSearch'])
-    # return render(request, 'index.html', context=context)
-    # # return redirect('index')
+    user_name = request.user.username
+
+    wvc = WeatherViewerController()
+    list_data_from_db = wvc.user_weather_view(user_name=user_name)
+
+    context = {
+        'locations_list': list_data_from_db
+    }
+    return render(request, 'location_templates/user_added_locations.html', context=context)
 
 
 def weather_viewer_add(request):
@@ -29,4 +25,8 @@ def weather_viewer_add(request):
     Добавляем данные о городе в БД
     :return:
     """
-    pass
+    data = request.POST
+    wwc = WeatherViewerController()
+    wwc.add_location_in_db(data)
+
+    return redirect('index')

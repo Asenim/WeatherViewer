@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}<link rel="stylesheet" href="{% static "css/location_static/css/user_added_locations.css" %}">{% endblock %}
+
+{% block title %} Профиль {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                {% if request.user.is_authenticated %}
+                    <div class="btn btn-default">
+                        <a class="btn btn-dark" href="/locations/user/">
+                            {{ request.user.username }}
+                        </a>
+                    </div>
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-danger" href="/logout"> Выйти </a>
+                    </div>
+                {% else %}
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-primary" href="/users/login"> Войти </a>
+                    </div>
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-dark" href="/users/registration/"> Регистрация </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <!-- Если пользователь авторизован - показываем добавленные
+        города и их погоду, а так же даем возможность удалить город-->
+        {% for weather_view in locations_list %}
+            {{ weather_view.name_city }} {{ weather_view.country_code }} {{ weather_view.temp }}
+        {% endfor %}
+    {% else %}
+        <!-- Если не авторизован, то предупреждаем его о том, что ему
+        следует авторизоваться и предлагаем ему две кнопки <<Авторизация>>
+         и <<Регистрация>>-->
+    {% endif %}
+
+{% endblock %}

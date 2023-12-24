@@ -10,7 +10,7 @@
             <div class="col-12 d-flex justify-content-end">
                 {% if request.user.is_authenticated %}
                     <div class="btn btn-default">
-                        <a class="btn btn-dark disabled">
+                        <a class="btn btn-dark" href="/locations/user">
                             {{ request.user.username }}
                         </a>
                     </div>
@@ -52,10 +52,20 @@
                         <h5 class="card-title"> {{ object.name_city }} {{ object.country_code }} </h5>
                         <p class="card-text"> Широта: {{ object.lat }} </p>
                         <p class="card-text"> Долгота: {{ object.lon }} </p>
-                        <form method="post">
-                            <input type="hidden">
-                        </form>
-<!--                        <a href="#" class="btn btn-primary"> Добавить в отслеживаемые </a>-->
+                        {% if user.is_authenticated %}
+                            <form method="post" action="locations/add/">
+                                {% csrf_token %}
+                                <input type="hidden" id="name_city" name="name_city" value="{{ object.name_city }}">
+                                <input type="hidden" id="user_name" name="user_name" value="{{ user.username }}">
+                                <input type="hidden" id="lat" name="lat" value="{{ object.lat }}">
+                                <input type="hidden" id="lon" name="lon" value="{{ object.lon }}">
+                                <button type="submit" class="btn btn-primary"> Добавить в отслеживаемые </button>
+                            </form>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary disabled">
+                                Войдите в свою учетную запись для добавления в отслеживаемые
+                            </button>
+                        {% endif %}
                   </div>
                 </div>
             </div>

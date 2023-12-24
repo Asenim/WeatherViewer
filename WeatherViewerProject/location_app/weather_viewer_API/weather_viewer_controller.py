@@ -1,6 +1,9 @@
 from WeatherViewerProject.settings import API_KEY_OW
 from location_app.weather_viewer_API.serialization_class_location import SerializationClassLocation
+from location_app.weather_viewer_API.serializaton_class_view_weather import SerializationClassViewWeather
 import requests
+from location_app.models import Locations
+from django.contrib.auth.models import User
 
 
 class WeatherViewerController:
@@ -21,14 +24,60 @@ class WeatherViewerController:
         return data_list_to_object
 
     @staticmethod
-    def add_location_in_db():
+    def add_location_in_db(data_for_add):
         """
         Добавляем локацию в БД.
         """
+        # Получаем данные из index.html input-hidden
+        user_name = data_for_add['user_name']
+        name_city = data_for_add['name_city']
+        lat = float(data_for_add['lat'])
+        lon = float(data_for_add['lon'])
+
+        # Достаем объект юзера и затем добавляем в БД локации
+        object_to_user_table = User.objects.get(username=user_name)
+        insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat, Longitude=lon)
+        insert_in_location_table.save()
+
+    def user_weather_view(self, user_name):
+        """
+        Используем API для формирования списка
+        текущей Погоды
+        :param user_name:
+        :return:
+        """
+        list_locations = self.__select_locations_from_db(user_name=user_name)
+        weather_list = []
+
+        for location in list_locations:
+            api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={API_KEY_OW}')
+            json_api_data = api_data.json()
+            object_weather = SerializationClassViewWeather(json_api_data, location)
+            # print(object_weather.name_city, object_weather.country_code, object_weather.temp)
+            weather_list.append(object_weather)
+
+        return weather_list
+
+    @staticmethod
+    def __select_locations_from_db(user_name):
+        """
+        Метод позволяет достать все локации из БД
+        принадлежащие определенному пользователю.
+        :return:
+        """
+        username = user_name
+        user = User.objects.get(username=username)
+        list_objects_locations = Locations.objects.filter(Userid=user)
+
+        return list_objects_locations
+
+
+    def delete_location_form_db(self):
         pass
 
 
 if __name__ == '__main__':
     wp = WeatherViewerController()
-    datawp = wp.search_location_by_name('Saint Petersburg')
-    print(datawp)
+    # womp_womp = wp.search_location_by_name('Saint Petersburg')
+    # print(womp_womp)
+    # wp.select_locations_from_db()
