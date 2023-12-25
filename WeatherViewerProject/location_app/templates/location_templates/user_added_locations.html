@@ -11,16 +11,22 @@
             <div class="col-12 d-flex justify-content-end">
                 {% if request.user.is_authenticated %}
                     <div class="btn btn-default">
+                        <a class="btn btn-outline-primary" href="/"> На главную </a>
+                    </div>
+                    <div class="btn btn-default">
                         <a class="btn btn-dark" href="/locations/user/">
                             {{ request.user.username }}
                         </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-danger" href="/logout"> Выйти </a>
+                        <a class="btn btn-outline-danger" href="/logout/"> Выйти </a>
                     </div>
                 {% else %}
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-primary" href="/users/login"> Войти </a>
+                        <a class="btn-outline-primary" href="/"> На главную </a>
+                    </div>
+                    <div class="btn btn-default">
+                        <a class="btn btn-outline-primary" href="/users/login/"> Войти </a>
                     </div>
                     <div class="btn btn-default">
                         <a class="btn btn-outline-dark" href="/users/registration/"> Регистрация </a>
@@ -34,7 +40,22 @@
         <!-- Если пользователь авторизован - показываем добавленные
         города и их погоду, а так же даем возможность удалить город-->
         {% for weather_view in locations_list %}
-            {{ weather_view.name_city }} {{ weather_view.country_code }} {{ weather_view.temp }}
+<!--            {{ weather_view.ID }} {{ weather_view.name_city }} {{ weather_view.country_code }} {{ weather_view.temp }}-->
+
+             <div class="container">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ weather_view.name_city }} {{ weather_view.country_code }} </h5>
+                        <p class="card-text"> Погода: {{ weather_view.temp }} </p>
+                        <form method="post" action="/locations/delete/">
+                            {% csrf_token %}
+                            <input type="hidden" id="id_db" name="id_db" value="{{ weather_view.ID }}">
+                            <input type="hidden" id="user_name" name="user_name" value="{{ user.username }}">
+                            <button type="submit" class="btn btn-primary"> Удалить из списка </button>
+                        </form>
+                  </div>
+                </div>
+            </div>
         {% endfor %}
     {% else %}
         <!-- Если не авторизован, то предупреждаем его о том, что ему

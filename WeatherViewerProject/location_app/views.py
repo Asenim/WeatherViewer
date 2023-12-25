@@ -20,6 +20,22 @@ def view_user_locations(request):
     return render(request, 'location_templates/user_added_locations.html', context=context)
 
 
+def weather_viewer_delete(request):
+    """
+    Удаляет данные добавленных локаций из БД
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        id_record = request.POST['id_db']
+        username = request.POST['user_name']
+        print(id_record, username)
+        wwc = WeatherViewerController()
+        wwc.delete_location_form_db(id_record=id_record, user_name=username)
+
+    return redirect('user_locations')
+
+
 def weather_viewer_add(request):
     """
     Добавляем данные о городе в БД

@@ -53,7 +53,6 @@ class WeatherViewerController:
             api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={API_KEY_OW}')
             json_api_data = api_data.json()
             object_weather = SerializationClassViewWeather(json_api_data, location)
-            # print(object_weather.name_city, object_weather.country_code, object_weather.temp)
             weather_list.append(object_weather)
 
         return weather_list
@@ -71,13 +70,9 @@ class WeatherViewerController:
 
         return list_objects_locations
 
+    @staticmethod
+    def delete_location_form_db(id_record, user_name):
+        user = User.objects.get(username=user_name)
+        object_locations = Locations.objects.filter(id=id_record).filter(Userid=user)
 
-    def delete_location_form_db(self):
-        pass
-
-
-if __name__ == '__main__':
-    wp = WeatherViewerController()
-    # womp_womp = wp.search_location_by_name('Saint Petersburg')
-    # print(womp_womp)
-    # wp.select_locations_from_db()
+        object_locations.delete()

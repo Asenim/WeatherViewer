@@ -10,16 +10,16 @@
             <div class="col-12 d-flex justify-content-end">
                 {% if request.user.is_authenticated %}
                     <div class="btn btn-default">
-                        <a class="btn btn-dark" href="/locations/user">
+                        <a class="btn btn-dark" href="/locations/user/">
                             {{ request.user.username }}
                         </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-danger" href="/logout"> Выйти </a>
+                        <a class="btn btn-outline-danger" href="/logout/"> Выйти </a>
                     </div>
                 {% else %}
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-primary" href="/users/login"> Войти </a>
+                        <a class="btn btn-outline-primary" href="/users/login/"> Войти </a>
                     </div>
                     <div class="btn btn-default">
                         <a class="btn btn-outline-dark" href="/users/registration/"> Регистрация </a>
@@ -53,7 +53,7 @@
                         <p class="card-text"> Широта: {{ object.lat }} </p>
                         <p class="card-text"> Долгота: {{ object.lon }} </p>
                         {% if user.is_authenticated %}
-                            <form method="post" action="locations/add/">
+                            <form method="post" action="/locations/add/">
                                 {% csrf_token %}
                                 <input type="hidden" id="name_city" name="name_city" value="{{ object.name_city }}">
                                 <input type="hidden" id="user_name" name="user_name" value="{{ user.username }}">
