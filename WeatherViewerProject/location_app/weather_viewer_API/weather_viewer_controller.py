@@ -31,12 +31,14 @@ class WeatherViewerController:
         # Получаем данные из index.html input-hidden
         user_name = data_for_add['user_name']
         name_city = data_for_add['name_city']
-        lat = float(data_for_add['lat'])
-        lon = float(data_for_add['lon'])
+        lat = float(data_for_add['lat'].replace(',', '.'))
+        lon = float(data_for_add['lon'].replace(',', '.'))
 
         # Достаем объект юзера и затем добавляем в БД локации
         object_to_user_table = User.objects.get(username=user_name)
-        insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat, Longitude=lon)
+
+        insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat,
+                                             Longitude=lon)
         insert_in_location_table.save()
 
     def user_weather_view(self, user_name):

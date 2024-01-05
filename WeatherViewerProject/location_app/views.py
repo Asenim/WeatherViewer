@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from location_app.weather_viewer_API.weather_viewer_controller import WeatherViewerController
 
 # Create your views here.
@@ -42,7 +42,12 @@ def weather_viewer_add(request):
     :return:
     """
     data = request.POST
+    # try:
     wwc = WeatherViewerController()
     wwc.add_location_in_db(data)
 
     return redirect('index')
+    # except Exception:
+    #     string_error = {'errors': 'Вы уже добавили данные с такими координатами'}
+    #
+    #     return render(request, 'location_templates/insert_error.html', context=string_error)

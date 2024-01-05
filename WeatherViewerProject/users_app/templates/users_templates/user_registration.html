@@ -19,6 +19,7 @@
             <span class="description">Заполните форму регистрации ниже:</span>
             <form class="form-horizontal" method="post">
                 {% csrf_token %}
+                {{ form.non_field_errors }}
                 <div class="form-group">
                     {{ form.username }}
                 </div>
@@ -30,7 +31,7 @@
                 </div>
 
                 <button type="submit" class="btn signup">Регистрация</button>
-                <a class="btn signin" href="/users/login">Войти</a>
+                <a class="btn signin" href="{% url 'user_authorization' %}">Войти</a>
             </form>
         </div>
     </div>
