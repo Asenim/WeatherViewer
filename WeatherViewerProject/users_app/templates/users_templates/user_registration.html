@@ -19,7 +19,7 @@
             <span class="description">Заполните форму регистрации ниже:</span>
             <form class="form-horizontal" method="post">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
+                {{ form.errors }}
                 <div class="form-group">
                     {{ form.username }}
                 </div>

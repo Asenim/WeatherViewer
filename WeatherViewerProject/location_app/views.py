@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, HttpResponse
 from location_app.weather_viewer_API.weather_viewer_controller import WeatherViewerController
+from location_app.forms import AddWeatherForm
 
 # Create your views here.
 
@@ -41,11 +43,30 @@ def weather_viewer_add(request):
     Добавляем данные о городе в БД
     :return:
     """
-    data = request.POST
-    # try:
-    wwc = WeatherViewerController()
-    wwc.add_location_in_db(data)
 
+    if request.method == 'POST':
+        data = request.POST
+        wwc = WeatherViewerController()
+        initial_data = wwc.add_location_in_db_actual_method(data_for_add=data)
+
+        form_add_data = AddWeatherForm(initial_data)
+
+        # print(form_add_data.is_valid())
+        # print(initial_data)
+        # print(form_add_data.errors)
+
+        if form_add_data.is_valid():
+            try:
+                print(initial_data, 'try')
+                form_add_data.save()
+                return redirect('user_locations')
+            except:
+                print(initial_data, 'except')
+                form_add_data.add_error(None, 'Ошибка добавления поста')
+    # data = request.POST
+    # # try:
+    # wwc = WeatherViewerController()
+    # wwc.add_location_in_db(data)
     return redirect('index')
     # except Exception:
     #     string_error = {'errors': 'Вы уже добавили данные с такими координатами'}

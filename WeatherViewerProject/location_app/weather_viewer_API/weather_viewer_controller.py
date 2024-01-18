@@ -24,9 +24,33 @@ class WeatherViewerController:
         return data_list_to_object
 
     @staticmethod
-    def add_location_in_db(data_for_add):
+    def add_location_in_db_actual_method(data_for_add):
         """
-        Добавляем локацию в БД.
+        Актуальный метод добавления в БД
+        :param data_for_add:
+        :return:
+        """
+
+        name_city = data_for_add['name_city']
+        user_name = data_for_add['user_name']
+        lat = round(float(data_for_add['lat'].replace(',', '.')), 5)
+        lon = round(float(data_for_add['lon'].replace(',', '.')), 5)
+
+        object_to_user_table = User.objects.get(username=user_name)
+
+        initial_data = {
+            'Name': name_city,
+            'Userid': object_to_user_table,
+            'Latitude': lat,
+            'Longitude': lon
+        }
+
+        return initial_data
+
+    @staticmethod
+    def __add_location_in_db_last_method(data_for_add):
+        """
+        Неактуальный метод использующийся без ModelForms - Добавляем локацию в БД.
         """
         # Получаем данные из index.html input-hidden
         user_name = data_for_add['user_name']
