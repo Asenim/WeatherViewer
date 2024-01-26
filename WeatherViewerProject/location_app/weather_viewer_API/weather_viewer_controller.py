@@ -48,24 +48,6 @@ class WeatherViewerController:
 
         return initial_data
 
-    # @staticmethod
-    # def __add_location_in_db_last_method(data_for_add):
-    #     """
-    #     Неактуальный метод использующийся без ModelForms - Добавляем локацию в БД.
-    #     """
-    #     # Получаем данные из index.html input-hidden
-    #     user_name = data_for_add['user_name']
-    #     name_city = data_for_add['name_city']
-    #     lat = float(data_for_add['lat'].replace(',', '.'))
-    #     lon = float(data_for_add['lon'].replace(',', '.'))
-    #
-    #     # Достаем объект юзера и затем добавляем в БД локации
-    #     object_to_user_table = User.objects.get(username=user_name)
-    #
-    #     insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat,
-    #                                          Longitude=lon)
-    #     insert_in_location_table.save()
-
     def user_weather_view(self, user_name):
         """
         Используем API для формирования списка
@@ -81,7 +63,7 @@ class WeatherViewerController:
             lat_decimal = Decimal(location.Latitude).normalize()
             lon_decimal = Decimal(location.Longitude).normalize()
             # Делаем запрос к api
-            api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat_decimal}&lon={lon_decimal}&appid={API_KEY_OW}')
+            api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat_decimal}&lon={lon_decimal}&appid={API_KEY_OW}&lang={"ru"}&units=metric')
             json_api_data = api_data.json()
             # Сериализуем объект и добавляем в список для дальнейшего отображения
             object_weather = SerializationClassViewWeather(json_api_data, location)

@@ -23,23 +23,9 @@ class AddWeatherForm(forms.ModelForm):
     class Meta:
         model = Locations
         fields = ['Name', 'Userid', 'Latitude', 'Longitude']
-        # localized_fields = '__all__'
-        # widgets = {
-        #     'Name': forms.HiddenInput(),
-        #     'Userid': forms.HiddenInput(),
-        #     'Latitude': forms.HiddenInput(),
-        #     'Longitude': forms.HiddenInput()
-        # }
 
         error_messages = {
             NON_FIELD_ERRORS: {
                 'unique_together': 'Эти данные уже существуют в таблице локаций'
             }
         }
-
-
-    # name_city = forms.CharField(max_length=255)
-    # country_code = forms.CharField(max_length=255)
-    # latitude = forms.DecimalField(max_digits=18, decimal_places=5)
-    # longitude = forms.DecimalField(max_digits=18, decimal_places=5)
-

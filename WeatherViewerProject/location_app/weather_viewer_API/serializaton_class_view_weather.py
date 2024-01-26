@@ -5,6 +5,6 @@ class SerializationClassViewWeather:
         фронтенде данные.
         """
         self.ID = location.id
-        self.name_city = location.Name
+        self.name_city = api_data['name']  # location.Name
         self.country_code = api_data['sys']['country']
         self.temp = api_data['main']['temp']
