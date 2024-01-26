@@ -1,5 +1,4 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from location_app.weather_viewer_API.weather_viewer_controller import WeatherViewerController
 from location_app.forms import AddWeatherForm
 
@@ -56,19 +55,14 @@ def weather_viewer_add(request):
         # print(form_add_data.errors)
 
         if form_add_data.is_valid():
-            try:
-                print(initial_data, 'try')
-                form_add_data.save()
-                return redirect('user_locations')
-            except:
-                print(initial_data, 'except')
-                form_add_data.add_error(None, 'Ошибка добавления поста')
-    # data = request.POST
-    # # try:
-    # wwc = WeatherViewerController()
-    # wwc.add_location_in_db(data)
-    return redirect('index')
-    # except Exception:
-    #     string_error = {'errors': 'Вы уже добавили данные с такими координатами'}
-    #
-    #     return render(request, 'location_templates/insert_error.html', context=string_error)
+            form_add_data.save()
+            return redirect('user_locations')
+
+        else:
+            """
+            Идея - Сделать render index html и добавить отображение всех необходимых форм
+            прямо тут (Search + Locations)
+            Либо Вынести Форму добавления в БД на уровень выше (view index) и обрабатывать ошибку
+            там (У этого метода есть Проблема)
+            """
+            return redirect('index')

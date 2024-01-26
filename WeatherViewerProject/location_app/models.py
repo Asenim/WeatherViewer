@@ -16,8 +16,8 @@ class Locations(models.Model):
     """
     Name = models.CharField(max_length=255, null=False)
     Userid = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    Latitude = models.DecimalField(max_digits=18, decimal_places=5)
-    Longitude = models.DecimalField(max_digits=18, decimal_places=5)
+    Latitude = models.DecimalField(max_digits=20, decimal_places=15)
+    Longitude = models.DecimalField(max_digits=20, decimal_places=15)
 
     class Meta:
         unique_together = ('Userid', 'Latitude', 'Longitude')

@@ -4,6 +4,7 @@ from location_app.weather_viewer_API.serializaton_class_view_weather import Seri
 import requests
 from location_app.models import Locations
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 
 class WeatherViewerController:
@@ -33,8 +34,8 @@ class WeatherViewerController:
 
         name_city = data_for_add['name_city']
         user_name = data_for_add['user_name']
-        lat = round(float(data_for_add['lat'].replace(',', '.')), 5)
-        lon = round(float(data_for_add['lon'].replace(',', '.')), 5)
+        lat = float(data_for_add['lat'].replace(',', '.'))
+        lon = float(data_for_add['lon'].replace(',', '.'))
 
         object_to_user_table = User.objects.get(username=user_name)
 
@@ -47,23 +48,23 @@ class WeatherViewerController:
 
         return initial_data
 
-    @staticmethod
-    def __add_location_in_db_last_method(data_for_add):
-        """
-        Неактуальный метод использующийся без ModelForms - Добавляем локацию в БД.
-        """
-        # Получаем данные из index.html input-hidden
-        user_name = data_for_add['user_name']
-        name_city = data_for_add['name_city']
-        lat = float(data_for_add['lat'].replace(',', '.'))
-        lon = float(data_for_add['lon'].replace(',', '.'))
-
-        # Достаем объект юзера и затем добавляем в БД локации
-        object_to_user_table = User.objects.get(username=user_name)
-
-        insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat,
-                                             Longitude=lon)
-        insert_in_location_table.save()
+    # @staticmethod
+    # def __add_location_in_db_last_method(data_for_add):
+    #     """
+    #     Неактуальный метод использующийся без ModelForms - Добавляем локацию в БД.
+    #     """
+    #     # Получаем данные из index.html input-hidden
+    #     user_name = data_for_add['user_name']
+    #     name_city = data_for_add['name_city']
+    #     lat = float(data_for_add['lat'].replace(',', '.'))
+    #     lon = float(data_for_add['lon'].replace(',', '.'))
+    #
+    #     # Достаем объект юзера и затем добавляем в БД локации
+    #     object_to_user_table = User.objects.get(username=user_name)
+    #
+    #     insert_in_location_table = Locations(Name=name_city, Userid=object_to_user_table, Latitude=lat,
+    #                                          Longitude=lon)
+    #     insert_in_location_table.save()
 
     def user_weather_view(self, user_name):
         """
@@ -76,8 +77,13 @@ class WeatherViewerController:
         weather_list = []
 
         for location in list_locations:
-            api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={API_KEY_OW}')
+            # Убираем лишние нули
+            lat_decimal = Decimal(location.Latitude).normalize()
+            lon_decimal = Decimal(location.Longitude).normalize()
+            # Делаем запрос к api
+            api_data = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat_decimal}&lon={lon_decimal}&appid={API_KEY_OW}')
             json_api_data = api_data.json()
+            # Сериализуем объект и добавляем в список для дальнейшего отображения
             object_weather = SerializationClassViewWeather(json_api_data, location)
             weather_list.append(object_weather)
 
@@ -98,7 +104,14 @@ class WeatherViewerController:
 
     @staticmethod
     def delete_location_form_db(id_record, user_name):
+        """
+        Сделать защиту удаления данных чужого пользователя
+        :param id_record:
+        :param user_name:
+        :return:
+        """
         user = User.objects.get(username=user_name)
+        # if user.is_autentifivation():
         object_locations = Locations.objects.filter(id=id_record).filter(Userid=user)
 
         object_locations.delete()

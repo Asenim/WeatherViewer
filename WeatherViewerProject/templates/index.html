@@ -43,15 +43,15 @@
     </div>
 
     {% if list_object %}
-        {% for object in list_object %}
-            <div class="container">
+        <div class="container d-flex align-content-start flex-wrap">
+            {% for object in list_object %}
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"> {{ object.name_city }} {{ object.country_code }} </h5>
                         <p class="card-text"> Широта: {{ object.lat }} </p>
                         <p class="card-text"> Долгота: {{ object.lon }} </p>
                         {% if user.is_authenticated %}
-                            <form method="post" action="{% url 'viewer_add' %}">
+                            <form method="post"action="{% url 'viewer_add' %}">
                                 {% csrf_token %}
                                 <input type="hidden" id="name_city" name="name_city" value="{{ object.name_city }}">
                                 <input type="hidden" id="user_name" name="user_name" value="{{ user.username }}">
@@ -66,10 +66,12 @@
                         {% endif %}
                   </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% else %}
-        <p> Введите город для поиска </p>
+        <div class="container d-flex justify-content-center flex-wrap">
+            Введите город для поиска
+        </div>
     {% endif %}
 
 {% endblock %}

@@ -39,8 +39,9 @@
     {% if request.user.is_authenticated %}
         <!-- Если пользователь авторизован - показываем добавленные
         города и их погоду, а так же даем возможность удалить город-->
-        {% for weather_view in locations_list %}
-             <div class="container">
+        <div class="container d-flex align-content-start flex-wrap">
+            {% for weather_view in locations_list %}
+
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"> {{ weather_view.name_city }} {{ weather_view.country_code }} </h5>
@@ -53,8 +54,8 @@
                         </form>
                   </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% else %}
         <!-- Если не авторизован, то предупреждаем его о том, что ему
         следует авторизоваться и предлагаем ему две кнопки <<Авторизация>>
