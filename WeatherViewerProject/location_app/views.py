@@ -30,11 +30,17 @@ def weather_viewer_delete(request):
     if request.method == 'POST':
         id_record = request.POST['id_db']
         username = request.POST['user_name']
-        print(id_record, username)
-        wwc = WeatherViewerController()
-        wwc.delete_location_form_db(id_record=id_record, user_name=username)
+        username_in_post_request = request.user.username
 
-    return redirect('user_locations')
+        # Проверка на корректность пользователя сделавшего запрос
+        if username == username_in_post_request:
+            wwc = WeatherViewerController()
+            wwc.delete_location_form_db(id_record=id_record, user_name=username)
+
+            return redirect('user_locations')
+        else:
+            error_delete = 'Ах ты... хитрый диванный хакер, нельзя удалять чужие данные из консоли разработчика'
+            return render(request, 'location_templates/error_template.html', context={'errors': error_delete})
 
 
 def weather_viewer_add(request):
@@ -59,10 +65,5 @@ def weather_viewer_add(request):
             return redirect('user_locations')
 
         else:
-            """
-            Идея - Сделать render index html и добавить отображение всех необходимых форм
-            прямо тут (Search + Locations)
-            Либо Вынести Форму добавления в БД на уровень выше (view index) и обрабатывать ошибку
-            там (У этого метода есть Проблема)
-            """
-            return redirect('index')
+            error_form = form_add_data.non_field_errors()
+            return render(request, 'location_templates/error_template.html', context={'errors': error_form})

@@ -104,14 +104,7 @@ class WeatherViewerController:
 
     @staticmethod
     def delete_location_form_db(id_record, user_name):
-        """
-        Сделать защиту удаления данных чужого пользователя
-        :param id_record:
-        :param user_name:
-        :return:
-        """
         user = User.objects.get(username=user_name)
-        # if user.is_autentifivation():
         object_locations = Locations.objects.filter(id=id_record).filter(Userid=user)
 
         object_locations.delete()

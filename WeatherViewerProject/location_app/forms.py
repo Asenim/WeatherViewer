@@ -33,7 +33,7 @@ class AddWeatherForm(forms.ModelForm):
 
         error_messages = {
             NON_FIELD_ERRORS: {
-                'unique_together': "%(model_name)s's %(field_labels)s are not unique.",
+                'unique_together': 'Эти данные уже существуют в таблице локаций'
             }
         }
 
