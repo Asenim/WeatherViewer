@@ -11,25 +11,25 @@
             <div class="col-12 d-flex justify-content-end">
                 {% if request.user.is_authenticated %}
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-primary" href="/"> На главную </a>
+                        <a class="btn btn-outline-primary" href="{% url 'index' %}"> На главную </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-dark" href="/locations/user/">
+                        <a class="btn btn-dark" href="{% url 'user_locations' %}">
                             {{ request.user.username }}
                         </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-danger" href="/logout/"> Выйти </a>
+                        <a class="btn btn-outline-danger" href="{% url 'logout' %}"> Выйти </a>
                     </div>
                 {% else %}
                     <div class="btn btn-default">
-                        <a class="btn-outline-primary" href="/"> На главную </a>
+                        <a class="btn btn-outline-primary" href="{% url 'index' %}"> На главную </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-primary" href="/users/login/"> Войти </a>
+                        <a class="btn btn-outline-primary" href="{% url 'user_authorization' %}"> Войти </a>
                     </div>
                     <div class="btn btn-default">
-                        <a class="btn btn-outline-dark" href="/users/registration/"> Регистрация </a>
+                        <a class="btn btn-outline-dark" href="{% url 'user_registration' %}"> Регистрация </a>
                     </div>
                 {% endif %}
             </div>

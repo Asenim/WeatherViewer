@@ -10,15 +10,21 @@ def view_user_locations(request):
     Показывает погоду локаций добавленных на аккаунт.
     :return:
     """
-    user_name = request.user.username
+    if request.user.is_authenticated:
+        user_name = request.user.username
+        session = request.session
+        print(session.keys())
 
-    wvc = WeatherViewerController()
-    list_data_from_db = wvc.user_weather_view(user_name=user_name)
+        wvc = WeatherViewerController()
+        list_data_from_db = wvc.user_weather_view(user_name=user_name)
 
-    context = {
-        'locations_list': list_data_from_db
-    }
-    return render(request, 'location_templates/user_added_locations.html', context=context)
+        context = {
+            'locations_list': list_data_from_db
+        }
+        return render(request, 'location_templates/user_added_locations.html', context=context)
+    else:
+        error_authorization = 'К сожалению вы не авторизованы, вам следует пройти процесс авторизации заново.'
+        return render(request, 'location_templates/error_template.html', context={'errors': error_authorization})
 
 
 def weather_viewer_delete(request):
