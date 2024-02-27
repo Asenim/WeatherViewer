@@ -1,4 +1,4 @@
-from WeatherViewerProject.settings import API_KEY_OW
+from WeatherViewerProject.settings.base_settings import API_KEY_OW
 from location_app.weather_viewer_API.serialization_class_location import SerializationClassLocation
 from location_app.weather_viewer_API.serializaton_class_view_weather import SerializationClassViewWeather
 import requests
