@@ -18,6 +18,7 @@ SK = os.environ.get('SECRET_KEY')
 POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 POSTGRES_USER = os.environ.get('POSTGRES_USER')
 POSTGRES_DB = os.environ.get('POSTGRES_DB')
+TEST_POSTGRES_DB = os.environ.get('TEST_POSTGRES_DB')
 HOST = os.environ.get('HOST')
 API_KEY_OW = os.environ.get('API_KEY_OW')
 #----------------------------#
@@ -39,7 +40,7 @@ SECRET_KEY = SK
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
 # CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://localhost']
 # CSRF_FAILURE_VIEW = ['http://127.0.0.1', 'http://localhost']
 
@@ -100,6 +101,14 @@ DATABASES = {
         'PASSWORD': POSTGRES_PASSWORD,
         'HOST': HOST,
         'PORT': '',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': TEST_POSTGRES_DB,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': HOST,
+        'PORT': '',
     }
 }
 
@@ -125,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Session active
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 3 * 60
+SESSION_COOKIE_AGE = 6 * 60
 
 
 # Internationalization

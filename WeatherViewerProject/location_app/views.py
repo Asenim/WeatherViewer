@@ -62,10 +62,6 @@ def weather_viewer_add(request):
 
         form_add_data = AddWeatherForm(initial_data)
 
-        # print(form_add_data.is_valid())
-        # print(initial_data)
-        # print(form_add_data.errors)
-
         if form_add_data.is_valid():
             form_add_data.save()
             return redirect('user_locations')

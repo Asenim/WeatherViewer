@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from location_app.models import Locations
 from django.core.exceptions import NON_FIELD_ERRORS
 
