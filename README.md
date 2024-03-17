@@ -53,7 +53,7 @@ Python версия ТЗ - https://github.com/zhukovsd/python-backend-learning-c
 Вам нужен будет любой Django проект на вашей машине (Можете использовать текущий)  
 Выполните код:   
 <code>from django.core.management.utils import get_random_secret_key</code>
-<code>print(get_random_secret_key())</code>
+<code>print(get_random_secret_key())</code>  
 После чего скопируйте полученный секретный ключ и и вставьте в .env SECRET_KEY
 #### API_KEY_OW  
 Получите API на сайте [OpenWeather](https://openweathermap.org/weather-data)  
